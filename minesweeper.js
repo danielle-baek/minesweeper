@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', startGame)
 
 // Define your `board` object here!
-
-var cellNumber = 4;
+var board = {cells:[]};
+var numOfRowCol = 4;
 
 function startGame () {  
-  generateBoard(cellNumber)
+  generateBoard(numOfRowCol)
   for (var i = 0; i < board.cells.length; i++) {
     board.cells[i].surroundingMines = countSurroundingMines(board.cells[i]);
 
@@ -58,28 +58,23 @@ function countSurroundingMines (cell) {
   return count;
 }
 
-function generateBoard (cellNumber) {
-  var board = {cells:[]}
-  for (var i = 0; i < cellNumber; i++) {
+function generateBoard (numOfRowCol) {
+  for (var i = 0; i < numOfRowCol; i++) {
+    for (var j = 0; j < numOfRowCol; j++ ) {
+      var aCell = {}
+      aCell.row = i;
+      aCell.col = j;
+      aCell.hidden = true;
+      aCell.isMine = false;
+      aCell.isMarked = false;
 
+      board.cells.push(aCell)
+    }
+  } 
+  //getting random number
+  for (var i = 0; i < numOfRowCol; i++) {
+    var rand = Math.floor(Math.random()*numOfRowCol*numOfRowCol);
+    board.cells[rand].isMine = true;
   }
-  var board = {cells:[
-    {row:0, col:0, isMine:"", hidden:true}, 
-    {row:0, col:1, isMine:true, hidden:true},
-    // {row:0, col:2, isMine:true, hidden:true},
-    // {row:0, col:3, isMine:"", hidden:true}, 
-    {row:1, col:0, isMine:"", hidden:true}, 
-    {row:1, col:1, isMine:"", hidden:true}
-    // {row:1, col:2, isMine:"", hidden:true},
-    // {row:1, col:3, isMine:"", hidden:true},
-    // {row:2, col:0, isMine:"", hidden:true}, 
-    // {row:2, col:1, isMine:"", hidden:true},
-    // {row:2, col:2, isMine:"", hidden:true},
-    // {row:2, col:3, isMine:"", hidden:true},
-    // {row:3, col:0, isMine:"", hidden:true}, 
-    // {row:3, col:1, isMine:"", hidden:true},
-    // {row:3, col:2, isMine:"", hidden:true},
-    // {row:3, col:3, isMine:"", hidden:true},
-    ]};
 }
 
